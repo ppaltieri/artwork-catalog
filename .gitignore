@@ -1,0 +1,22 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local application data
+artworks.json
+collections.json
+
+# Generated PDF files
+*.pdf
+
+# IDE settings
+.vscode/
