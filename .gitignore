@@ -18,5 +18,8 @@ collections.json
 # Generated PDF files
 *.pdf
 
+# Allow sample PDFs in assets
+!assets/*.pdf
+
 # IDE settings
 .vscode/

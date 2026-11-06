@@ -90,28 +90,42 @@ def _draw_artwork_page(pdf: canvas.Canvas, artwork: Artwork) -> None:
         text_y -= 2 * mm
 
 
-def _draw_collection_cover(pdf: canvas.Canvas, collection: Collection) -> None:
+def _draw_collection_cover(
+    pdf: canvas.Canvas,
+    collection: Collection,
+) -> None:
     styles = getSampleStyleSheet()
 
     title_style = styles["Title"]
     body_style = styles["BodyText"]
+
+    paragraph_width = 180 * mm
+    text_x = (PAGE_WIDTH - paragraph_width) / 2
+    text_y = PAGE_HEIGHT * 0.60
 
     title = Paragraph(
         escape(collection.name),
         title_style,
     )
 
-    _, height = title.wrap(400, 100)
-    title.drawOn(pdf, 100, 650 - height)
+    _, height = title.wrap(paragraph_width, PAGE_HEIGHT)
+    text_y -= height
+    title.drawOn(pdf, text_x, text_y)
 
     if collection.description:
+        text_y -= 10 * mm
+
         description = Paragraph(
             escape(collection.description),
             body_style,
         )
 
-        _, height = description.wrap(400, 200)
-        description.drawOn(pdf, 100, 580 - height)
+        _, height = description.wrap(
+            paragraph_width,
+            PAGE_HEIGHT,
+        )
+        text_y -= height
+        description.drawOn(pdf, text_x, text_y)
 
 
 def export_artwork_pdf(artwork: Artwork, output_path: str | Path) -> None:

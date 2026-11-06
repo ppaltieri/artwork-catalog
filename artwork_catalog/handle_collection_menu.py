@@ -41,7 +41,7 @@ def handle_collection_menu():
 
 
 # Search collections
-        elif selected_option ==3:
+        elif selected_option == 3:
             search_entry = input("\nType your search: ")
             results = search_collection_name(search_entry)
             print()

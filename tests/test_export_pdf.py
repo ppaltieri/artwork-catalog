@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock
-
+from reportlab.lib.units import mm
 import pytest
 
 from artwork_catalog.artwork import Artwork
@@ -130,6 +130,7 @@ def test_draw_artwork_page_without_notes(
     assert mock_paragraph_class.call_count == 6
 
 
+
 def test_draw_collection_cover_with_description(
     monkeypatch,
     collection,
@@ -162,24 +163,32 @@ def test_draw_collection_cover_with_description(
 
     assert mock_paragraph_class.call_count == 2
 
+    paragraph_width = 180 * mm
+    text_x = (export_pdf.PAGE_WIDTH - paragraph_width) / 2
+
+    title_y = export_pdf.PAGE_HEIGHT * 0.60 - 30
+    description_y = title_y - 10 * mm - 40
+
     mock_title.wrap.assert_called_once_with(
-        400,
-        100,
+        paragraph_width,
+        export_pdf.PAGE_HEIGHT,
     )
+
     mock_title.drawOn.assert_called_once_with(
         mock_pdf,
-        100,
-        620,
+        text_x,
+        title_y,
     )
 
     mock_description.wrap.assert_called_once_with(
-        400,
-        200,
+        paragraph_width,
+        export_pdf.PAGE_HEIGHT,
     )
+
     mock_description.drawOn.assert_called_once_with(
         mock_pdf,
-        100,
-        540,
+        text_x,
+        description_y,
     )
 
 
